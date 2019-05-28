@@ -1,0 +1,23 @@
+version: "3"
+services:
+  app:
+    image: matomo:3-apache
+    restart: always
+    links:
+      - db
+    volumes:
+      - "./config:/var/www/html/config:rw"
+      - "./logs:/var/www/html/logs"
+    #environment:
+    #  - "VIRTUAL_HOST=CHANGE_ME"
+    ports:
+      - "8383:80"
+  db:
+    image: mariadb:latest
+    volumes:
+      - "./database:/var/lib/mysql"
+    environment:
+      - "MYSQL_DATABASE=matomo"
+      - "MYSQL_ROOT_PASSWORD=password"
+      - "MYSQL_USER=matomo"
+      - "MYSQL_PASSWORD=password"
